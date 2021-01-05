@@ -49,9 +49,6 @@ function getCss(theme: string, fontSize: string) {
       }
 
     body {
-        background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
         height: 100vh;
         display: flex;
         text-align: center;
@@ -64,6 +61,16 @@ function getCss(theme: string, fontSize: string) {
         font-family: 'Vera';
         white-space: pre-wrap;
         letter-spacing: -5px;
+    }
+
+    .frame {
+        width: 80vw;
+        height: 80vh;
+        border-radius: 36px;
+        border: #FFE86A 48px solid;
+        position: absolute;
+        top: calc(10vh - 48px);
+        left: calc(10vw - 48px);
     }
 
     code:before, code:after {
@@ -79,7 +86,9 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .logo {
-        margin: 0 75px;
+        position: absolute;
+        bottom: 24px;
+        right: 24px;
     }
 
     .plus {
@@ -134,21 +143,28 @@ export function getHtml(parsedReq: ParsedRequest) {
         ${getCss(theme, fontSize)}
     </style>
     <body>
-    asdf
+    <div class="frame"></div>
     ${title}
+    <div class="icon">
+        ${getImage(
+          "https://static.shinyaigeek.dev/static/icon_transparent.png",
+          "auto",
+          "530"
+        )}
+    </div>
     </body>
 </html>`;
 }
 
-// function getImage(src: string, width = "auto", height = "225") {
-//   return `<img
-//         class="logo"
-//         alt="Generated Image"
-//         src="${sanitizeHtml(src)}"
-//         width="${sanitizeHtml(width)}"
-//         height="${sanitizeHtml(height)}"
-//     />`;
-// }
+function getImage(src: string, width = "auto", height = "225") {
+  return `<img
+        class="logo"
+        alt="Generated Image"
+        src="${sanitizeHtml(src)}"
+        width="${sanitizeHtml(width)}"
+        height="${sanitizeHtml(height)}"
+    />`;
+}
 
 // function getPlusSign(i: number) {
 //   return i === 0 ? "" : '<div class="plus">+</div>';
