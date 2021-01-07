@@ -44,7 +44,7 @@ function getCss() {
         width: 70vw;
         height: 70vh;
         position: absolute;
-        top: calc(12vh + 72px);
+        top: calc(24vh + 96px);
         left: calc(12vw + 72px);
     }
 
