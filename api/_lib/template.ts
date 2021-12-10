@@ -1,5 +1,7 @@
 import { sanitizeHtml } from "./sanitizer";
 import { ParsedRequest } from "./types";
+import { loadDefaultJapaneseParser } from 'budoux';
+const parser = loadDefaultJapaneseParser();
 const twemoji = require("twemoji");
 const twOptions = { folder: "svg", ext: ".svg" };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
@@ -88,7 +90,9 @@ function getCss() {
 //         </div>`
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { title } = parsedReq;
+    const { title: rawTitle } = parsedReq;
+    const title = emojify(sanitizeHtml(rawTitle));
+    const html = parser.translateHTMLString(title)
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -100,7 +104,7 @@ export function getHtml(parsedReq: ParsedRequest) {
     <body>
     <div class="frame"></div>
     <div class="title">
-    ${emojify(sanitizeHtml(title))}
+    ${html}
     </div>
     <div class="icon">
         ${getImage(
