@@ -1,13 +1,14 @@
 import { sanitizeHtml } from "./sanitizer";
 import { ParsedRequest } from "./types";
-import { loadDefaultJapaneseParser } from 'budoux';
+import { loadDefaultJapaneseParser } from "budoux";
 const parser = loadDefaultJapaneseParser();
+
 const twemoji = require("twemoji");
 const twOptions = { folder: "svg", ext: ".svg" };
 const emojify = (text: string) => twemoji.parse(text, twOptions);
 
 function getCss() {
-    return `
+  return `
     @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800');
 
     body {
@@ -71,7 +72,7 @@ function getCss() {
         width: 1em;
         margin: 0 .05em 0 .1em;
         vertical-align: -0.1em;
-    }`
+    }`;
 }
 
 // const hinan = `
@@ -90,10 +91,10 @@ function getCss() {
 //         </div>`
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { title: rawTitle } = parsedReq;
-    const title = emojify(sanitizeHtml(rawTitle));
-    const html = parser.translateHTMLString(title)
-    return `<!DOCTYPE html>
+  const { title: rawTitle } = parsedReq;
+  const title = emojify(sanitizeHtml(rawTitle));
+  const html = parser.translateHTMLString(title);
+  return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
     <title>Generated Image</title>
@@ -108,17 +109,17 @@ export function getHtml(parsedReq: ParsedRequest) {
     </div>
     <div class="icon">
         ${getImage(
-        "https://static.shinyaigeek.dev/static/icon_transparent.png",
-        "auto",
-        "530"
-    )}
+          "https://static.shinyaigeek.dev/static/icon_transparent.png",
+          "auto",
+          "530"
+        )}
     </div>
     </body>
 </html>`;
 }
 
 function getImage(src: string, width = "auto", height = "225") {
-    return `<img
+  return `<img
         class="logo"
         alt="Generated Image"
         src="${sanitizeHtml(src)}"
