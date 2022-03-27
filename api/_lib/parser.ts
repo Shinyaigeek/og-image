@@ -18,7 +18,7 @@ export function parseRequest(req: IncomingMessage) {
     throw new Error("Expected a single title");
   }
 
-  const arr = (pathname || "/").slice(2).split(".");
+  const arr = (pathname || "/").slice(1).split(".");
   let extension = "";
   let text = "";
   if (arr.length === 0) {
